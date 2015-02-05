@@ -43,36 +43,34 @@ pData <- read.csv.sql(filName,
                       header = TRUE, , sep = ";", 
                       colClasses = vClasses, nrows = maxLines)
 
-pData$dateNTime <- strptime(paste(pData$Date, pData$Time),  format = "%d/%m/%Y %H:%M:%S")
+pData$datetime <- strptime(paste(pData$Date, pData$Time),  format = "%d/%m/%Y %H:%M:%S")
 
 png(file = "plot4.png", width = 480, height = 480)
 
 par(mfrow = c(2, 2), cex = 0.74)                    ## cex.lab = 1.1, cex.axis = 0.75)
 
 with(pData, {
-     plot(dateNTime, Global_active_power, type = "l",
+     plot(datetime, Global_active_power, type = "l",
                  xlab = "", 
                  ylab = "Global Active Power" )
      
-     plot(dateNTime, Voltage, type = "l",
-          xlab = "datetime", 
+     plot(datetime, Voltage, type = "l", 
           ylab = "Voltage" )
 
-     plot(dateNTime, Sub_metering_1, type = "l", lwd = 1.5,
+     plot(datetime, Sub_metering_1, type = "l", lwd = 1.5,
           xlab = "", 
           ylab = "Energy sub metering" )
      
-     lines(dateNTime, Sub_metering_2, type = "l", lwd = 1.5,
+     lines(datetime, Sub_metering_2, type = "l", lwd = 1.5,
            col = "red", xlab = "", ylab = "" )
      
-     lines (dateNTime, Sub_metering_3, type = "l", lwd = 1.5,
+     lines (datetime, Sub_metering_3, type = "l", lwd = 1.5,
             col = "blue", xlab = "", ylab = "" )
      
      legend("topright", lty = c("31"), bty = "n", col = c("black", "red", "blue"), 
             legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
      
-     plot(dateNTime, Global_reactive_power, type = "l",
-          xlab = "datetime" )
+     plot(datetime, Global_reactive_power, type = "l")
      
     })
 
