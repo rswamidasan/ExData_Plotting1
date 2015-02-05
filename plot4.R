@@ -72,7 +72,7 @@ with(pData, {
             legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
      
      plot(dateNTime, Global_reactive_power, type = "l",
-          xlab = "datetime", )
+          xlab = "datetime" )
      
     })
 
