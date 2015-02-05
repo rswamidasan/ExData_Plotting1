@@ -12,9 +12,9 @@
 ##  This is a large file.  It has over 2 million rows, of which we need less
 ##  than 3,000.  So, steps have been taken to make the reading more efficient.
 
-##  This script assumes that the data set file and/or zipped folder is present
-##  in the working directory.  If the unzipped file is not present, the zipped 
-##  folder is unzipped.  read.csv.sql() cannot use unz(), unfortunately.
+##  This script assumes that the unzipped data file or zipped archive is present
+##  in the working directory.  If the unzipped file is not present, it is extracted 
+##  from the archive.  read.csv.sql() cannot use unz() as an argument, unfortunately.
 
 filName <- "household_power_consumption.txt"
 
@@ -23,8 +23,8 @@ if (!file.exists(filName))
 
 ##  Read in 1 line of the file to determine column classes.
 
-pData <- read.table(filName, header = T, nrows = 1,
-                    sep =";", as.is = T, na.strings ="?")
+pData <- read.table(filName, header = TRUE, nrows = 1,
+                    sep =";", as.is = TRUE, na.strings ="?")
 
 vClasses <- sapply(pData, class)      ##  Store column classes
 
@@ -40,8 +40,8 @@ library(sqldf)                        ##  loading sqldf package
 pData <- read.csv.sql(filName, 
                       sql = "select * from file 
                       WHERE Date = '1/2/2007' OR Date = '2/2/2007'",
-                      header = T, , sep = ";", colClasses = vClasses,
-                      nrows = maxLines)
+                      header = TRUE, , sep = ";", 
+                      colClasses = vClasses, nrows = maxLines)
 
 pData$dateNTime <- strptime(paste(pData$Date, pData$Time),  format = "%d/%m/%Y %H:%M:%S")
 
